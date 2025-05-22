@@ -1,0 +1,235 @@
+
+#include <iostream>
+using namespace std;
+
+struct Pesanan {
+    string nama;
+    string jenisRoti;
+    int totalHarga;
+}; Pesanan pesan;
+
+// untuk history
+struct nodeQueue {
+    Pesanan info;
+    nodeQueue *next;
+};
+
+nodeQueue *depan, *belakang;
+
+void buatQueue() {
+    depan = NULL;
+    belakang = NULL;
+}
+
+bool queueKosong() {
+    return depan == NULL;
+}
+
+void nambahantreanenquue(Pesanan ib) {
+    nodeQueue *nb = new nodeQueue;
+    nb->info = ib;
+    nb->next = NULL;
+
+    if (queueKosong()) {
+        depan = nb;
+    } else {
+        belakang->next = nb;
+    }
+    belakang = nb;
+    cout << "Pesanan " << ib.nama << " masuk antrean." << endl;
+}
+
+Pesanan hapusantreandequeue() {
+    if (queueKosong()) {
+        cout << "Antrean kosong." << endl;
+        return {};
+    } else {
+        nodeQueue *hapus = depan;
+        Pesanan pesan = hapus->info;
+        depan = depan->next;
+        if (depan == NULL) belakang = NULL;
+        delete hapus;
+        return pesan;
+    }
+}
+
+void tampilantreanqueue() {
+    nodeQueue *bantu = depan;
+    if (queueKosong()) {
+        cout << "Antrean kosong. " << endl;
+        return;
+    }
+    int i = 1;
+    cout << "Daftar Antrean:" << endl;
+    while (bantu != NULL) {
+        cout << "===============================" << endl;
+        cout << "Antrean ke-" << i++ << endl;
+        cout << "-------------------------------" << endl;
+        cout << "Nama        :" << bantu->info.nama << endl;
+        cout << "Jenis Roti  :" << bantu->info.jenisRoti << endl;
+        cout << "Total Harga :" << bantu->info.totalHarga;
+        bantu = bantu->next;
+    }
+    cout << "===============================" << endl;
+
+}
+
+struct nodeStack {
+    Pesanan info;
+    nodeStack *next;
+};
+
+nodeStack *awal, *top;
+
+void buatStack() {
+    awal = top = NULL;
+}
+
+bool stackKosong() {
+    return awal == NULL;
+}
+
+void push(Pesanan ib) {
+    nodeStack *newnode = new nodeStack();
+    newnode->info = ib;
+    newnode->next = NULL;
+    if (stackKosong()) {
+        awal = top = newnode;
+    } else {
+        top->next = newnode;
+        top = newnode;
+    }
+}
+
+void pop() {
+    if (stackKosong()) {
+        cout << "antrean kosong " << endl;
+        return;
+    } else {
+        nodeStack *bantu = awal;
+        while (bantu->next != top) bantu = bantu->next;
+        nodeStack *hapus = top;
+        bantu->next = NULL;
+        top = bantu;
+        delete hapus;
+    }
+}
+
+void ambilantrean() {
+    
+    cout << "Nama: ";
+    getline(cin, pesan.nama);
+    cout << "Jenis roti: ";
+    getline(cin, pesan.jenisRoti);
+    cout << "Total harga: ";
+    cin >> pesan.totalHarga;
+    cin.ignore();
+    nambahantreanenquue(pesan);
+}
+
+void layanipembeli() {
+    if (queueKosong()) {
+        cout << "Antrean kosong.\n";
+    } else {
+        Pesanan pesan = hapusantreandequeue();
+        push(pesan);
+        cout << "Melayani pesanan " << pesan.nama << endl;
+    }
+}
+
+void tampilriwayatstack() {
+    nodeStack *bantu = awal;
+    if (stackKosong()) {
+        cout << "Antrean kosong." << endl;
+        return;
+    }
+    int i = 1;
+    cout << "Riwayat Pesanan yang Dilayani: " << endl;
+    while (bantu != NULL) {
+        cout << "===============================\n";
+        cout << "Riwayat Pesanan ke-" << i++ << endl;
+        cout << "=================================\n";
+        cout << "Nama        :" << bantu->info.nama << endl;
+        cout << "Jenis Roti  :" << bantu->info.jenisRoti << endl;
+        cout << "Total Harga :" << bantu->info.totalHarga;
+        bantu = bantu->next;
+    }
+    cout << "\n===============================\n";
+}
+
+void batalkanPesanan() {
+    if (queueKosong()) {
+        cout << "Antrean kosong." << endl;
+        return;
+    }
+    cout << "Pesanan terakhir : " << belakang->info.nama << endl;
+    char confirm;
+    cout << "Apakah yakin ingin membatalkan pesanan ? (y/n) : ";
+    cin >> confirm; 
+    cin.ignore();
+    if (confirm != 'y' && confirm != 'Y') {
+        cout << ">>> Pembatalan dibatalkan.";
+        return;
+    }
+    if (depan == belakang) {
+        cout << "Pesanan " << depan->info.nama << " dibatalkan." << endl;
+        delete depan;
+        depan = belakang = NULL;
+        return;
+    }
+
+    nodeQueue *bantu = depan;
+    while (bantu->next != belakang) {
+        bantu = bantu->next;
+    }
+    cout << "Pesanan dari " << belakang->info.nama << " dibatalkan." << endl;
+    delete belakang;
+    belakang = bantu;
+    belakang->next = NULL;
+}
+
+int main() {
+    buatQueue();
+    buatStack();
+    int pilihan;
+    do {
+        cout << "=============================" << endl; 
+        cout << "       Toko Roti Manis       " << endl; 
+        cout << "=============================" << endl;
+        cout << "1. Ambil Antrean" << endl;
+        cout << "2. Layani Pembeli" << endl;
+        cout << "3. Tampilkan Antrean" << endl;
+        cout << "4. Batalkan Pesanan Terakhir" << endl;
+        cout << "5. Riwayat Pesanan" << endl;
+        cout << "6. Keluar" << endl;
+        cout << "____________________________" << endl;
+        cout << "Pilihan: ";
+        cin >> pilihan;
+        cin.ignore();
+        switch (pilihan) {
+            case 1:
+                ambilantrean();
+                break;
+            case 2:
+                layanipembeli();
+                break;
+            case 3:
+                tampilantreanqueue();
+                break;
+            case 4:
+                batalkanPesanan();
+                break;
+            case 5:
+                tampilriwayatstack();
+                break;
+            case 6:
+                cout << "Terimakasih sudah digunakan" << endl; ;
+                break;
+            default:
+                cout << "Pilihan tidak valid" << endl;
+                break;
+        }
+    } while (pilihan != 6);
+
+    return 0;
+}
