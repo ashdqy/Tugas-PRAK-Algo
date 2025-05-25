@@ -67,10 +67,10 @@ void tampilantreanqueue() {
         cout << "-------------------------------" << endl;
         cout << "Nama        :" << bantu->info.nama << endl;
         cout << "Jenis Roti  :" << bantu->info.jenisRoti << endl;
-        cout << "Total Harga :" << bantu->info.totalHarga;
+        cout << "Total Harga :" << bantu->info.totalHarga << endl;
         bantu = bantu->next;
     }
-    cout << "===============================" << endl;
+        cout << "=============================" << endl;
 
 }
 
@@ -151,10 +151,10 @@ void tampilriwayatstack() {
         cout << "=================================\n";
         cout << "Nama        :" << bantu->info.nama << endl;
         cout << "Jenis Roti  :" << bantu->info.jenisRoti << endl;
-        cout << "Total Harga :" << bantu->info.totalHarga;
+        cout << "Total Harga :" << bantu->info.totalHarga << endl;
         bantu = bantu->next;
     }
-    cout << "\n===============================\n";
+        cout << "\n===============================\n";
 }
 
 void batalkanPesanan() {
