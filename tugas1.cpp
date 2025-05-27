@@ -71,7 +71,7 @@ int main()
 
         cout << "1. Daftar Roti" << endl;
         cout << "2. Cari berdasar nama" << endl;
-        cout << "3. cari berdasar harga" << endl;
+        cout << "3. cari berdasar kode" << endl;
         cout << "4. Sort Harga (ascending)" << endl;
         cout << "5. sort harga (descending)" << endl;
         cout << "6. EXIT" << endl;
@@ -123,14 +123,14 @@ int main()
         case 3:
         {
             float cari;
-            cout << "MENU CARI BERDASAR HARGA" << endl;
+            cout << "MENU CARI BERDASAR KODE" << endl;
             cout << "Masukkan harga roti yang dicari : ";
             cin >> cari;
             cin.ignore();
 
             for (int i = 0; i < n; i++)
             {
-                if (ptr[i].harga == cari)
+                if (ptr[i].koderoti == cari)
                 {
                     cout << "===============================" << endl;
                     cout << "Nama Roti   |Kode    |Harga   " << endl;
