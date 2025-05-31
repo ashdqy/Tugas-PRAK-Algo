@@ -292,6 +292,6 @@ int main()
             undo();
             break;
         }
-    } while (pilihan != 0);
+    } while (pilihan != 7);
     return 0;
 }
